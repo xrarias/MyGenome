@@ -10,11 +10,11 @@ CS485G: Applied Bioinformatics S26 Repository
 # Getting Started
 1. Set up of VM using code
   '''
-wget https://www.cs.uky.edu/~acta225/CS485/vm_soft_setup.sh
+    wget https://www.cs.uky.edu/~acta225/CS485/vm_soft_setup.sh
   ''' 
 2. Workshop materials
   '''
- wget https://www.cs.uky.edu/~acta225/CS485/workshop-materials.tar.xz
+  wget https://www.cs.uky.edu/~acta225/CS485/workshop-materials.tar.xz
   '''
 ## Downloading Data
 <details>
