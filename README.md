@@ -20,9 +20,8 @@ CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Click to expand</summary>
   1. Data was downloaded from the Farman Lab computer using the following code:
-  ```
-  scp -r ngs@10.163.188.11:Desktop/Bc394 ./sequences/
-  ```
+  
+    scp -r ngs@10.163.188.11:Desktop/Bc394 ./sequences/
   2. Sequences were renamed 
 
   ```
