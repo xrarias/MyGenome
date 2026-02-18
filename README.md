@@ -9,25 +9,25 @@ CS485G: Applied Bioinformatics S26 Repository
 
 # Getting Started
 1. Set up of VM using code
-  '''
+  ```
     wget https://www.cs.uky.edu/~acta225/CS485/vm_soft_setup.sh
-  ''' 
+  ```
 2. Workshop materials
-  '''
+  ```
   wget https://www.cs.uky.edu/~acta225/CS485/workshop-materials.tar.xz
-  '''
+  ```
 ## Downloading Data
 <details>
 <summary>Click to expand</summary>
   1. Data was downloaded from the Farman Lab computer using the following code:
-    '''
+    ```
   scp -r ngs@10.163.188.11:Desktop/Bc394 ./sequences/
-    '''
+    ```
   2. Sequences were renamed 
-    '''
+    ```
   mv ./sequences/Be394/Bc394_CKDL250033905-1A_2335FYLT4_L1_1.fq.gz ./sequences/Be394/Be394_1.fq.gz
   mv ./sequences/Be394/Bc394_CKDL250033905-1A_2335FYLT4_L1_2.fq.gz ./sequences/Be394/Be394_2.fq.gz
-    '''
+    ```
   
   
 </details>
@@ -36,9 +36,9 @@ CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Click to expand</summary>
 1. Fastqc was run on raw reads
-  '''
+```
 fastqc ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz -o ~/sequences/
-  '''
+```
 </details>
 2. Adaptors were trimmed, see below for sequences:
 <details>
