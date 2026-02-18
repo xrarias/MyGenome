@@ -24,6 +24,7 @@ CS485G: Applied Bioinformatics S26 Repository
   scp -r ngs@10.163.188.11:Desktop/Bc394 ./sequences/
   ```
   2. Sequences were renamed 
+
   ```
   mv ./sequences/Be394/Bc394_CKDL250033905-1A_2335FYLT4_L1_1.fq.gz ./sequences/Be394/Be394_1.fq.gz
   mv ./sequences/Be394/Bc394_CKDL250033905-1A_2335FYLT4_L1_2.fq.gz ./sequences/Be394/Be394_2.fq.gz
