@@ -36,9 +36,9 @@ CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Click to expand</summary>
 1. Fastqc was run on raw reads
-  ```
+```
 fastqc ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz -o ~/sequences/
-  ```
+```
 </details>
 2. Adaptors were trimmed, see below for sequences:
 <details>
@@ -61,20 +61,20 @@ GATCGGAAGAGCACACGTCTGAACTCCAGTCACTTAGGCATCTCGTATGC
 GGGGGGGGGGGGGGGGGGGG
 </details>
 3. Trimmomatic was run using this code:
-  '''
+  ```
 java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz ./Bc394/Bc394_1_paired.fastq ./Bc394/Bc394_1_unpaired.fastq ./Bc394/Bc394_2_paired.fastq ./Bc394/Bc394_2_unpaired.fastq ILLUMINACLIP:adaptors.fa:2:30:10 SLIDINGWINDOW:20:20 MINLEN:125
-  '''
+  ```
 4. Fast QC was run again using this code on the paired and unpaired trimmed reads:
-  '''
+  ```
   fastqc /home/xrar222/sequences/Bc394/Bc394_1_unpaired.fastq /home/xrar222/sequences/Bc394/Bc394_1_paired.fastq /home/xrar222/sequences/Bc394/Bc394_2_unpaired.fastq /home/xrar222/sequences/Bc394/Bc394_2_paired.fastq -o /home/xrar222/sequences
-  '''
+  ```
   5. To determine the number of trimmed bases these codes were used (seperate for r1 and r2, added afterwards)  
-  '''
+  ```
   grep LH00659 Bc394_1_paired.fastq -A 1 | grep -v "@LH00659" | grep -v "^-" | wc -m
-  '''
-  '''
+  ```
+  ```
   grep LH00659 Bc394_2_paired.fastq -A 1 | grep -v "@LH00659" | grep -v "^-" | wc -m
-  '''
+  ```
 ## Genome Assembly
   1. Transfer Data to MCC:
 
