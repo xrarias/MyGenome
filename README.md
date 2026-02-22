@@ -93,8 +93,75 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
 ## Genome Assembly
   1. Transfer Data to MCC:
 
+```
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/sequences/Bc394/Bc394_1_paired.fastq /project/farman_s26abt480/xrar222/Bc394
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/sequences/Bc394/Bc394_2_paired.fastq /project/farman_s26abt480/xrar222/Bc394
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/sequences/Bc394/Bc394_1_unpaired.fastq /project/farman_s26abt480/xrar222/Bc394
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/sequences/Bc394/Bc394_2_unpaired.fastq /project/farman_s26abt480/xrar222/Bc394
+
+```
   2. Using Velvet:
+  Used Velvet Advisor (https://dna.med.monash.edu/~torsten/velvet_advisor/) to determine 77 was the suggested kmer length (based on 5.39 million reads, 150bp length, paired end, 20 fold coverage,and a 40Mbp genome size)
+    Assembly script:
+<details>
+<summary>Click to expand</summary>
+  
+#!/bin/bash
 
-  3. Using SPAdes:
+#SBATCH --time 48:00:00
+#SBATCH --job-name=VelvetOptimiser
+#SBATCH --nodes=1
+#SBATCH --ntasks=8
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=short
+#SBATCH --mem=180GB
+#SBATCH --mail-type ALL
+#SBATCH -A cea_farman_s26abt480
+#SBATCH --mail-type ALL
+#SBATCH --mail-user farman@uky.edu,xrar222@uky.edu
 
-  4. Looking at Bandage Plot
+echo "SLURM_NODELIST: "$SLURM_NODELIST
+
+# define variables
+  strainID=$1
+
+  lowK=$2
+
+  highK=$3
+
+  step=$4
+
+# make a directory for assemblies
+  mkdir $strainID
+
+# copy paired reads into directory
+  cp $strainID*1_paired*f*q* $strainID/
+  cp $strainID*2_paired*f*q* $strainID/
+
+# change into directory
+  cd $strainID
+
+# create hard-coded read names
+  cp $strainID*1_paired*f*q* forward.fq
+  cp $strainID*2_paired*f*q* reverse.fq
+
+# run velvetoptimiser in singularity
+  singularity run --app perlvelvetoptimiser226 /share/singularity/images/ccs/conda/amd-conda2-centos8.sinf VelvetOptimiser.pl \
+  -s $lowK -e $highK -x $step -d velvet_${strainID}_${lowK}_${highK}_${step}_noclean -o ' -clean no' -f ' -shortPaired -fastq -separate forward.fq reverse.fq'
+
+# remove read files with hard-coded names
+  rm forward.fq
+  rm reverse.fq
+  
+</details>
+
+Submitted job using:
+
+```
+sbatch velvetoptimiser.sh Bc394 37 117 10
+```
+where 37 is the suggested kmer length minus 40 and 117 is the suggested kmer length plus 40 for the low and high ranges, and 10 is the step size.
+  4. Using SPAdes:
+
+  5. Looking at Bandage Plot
+
