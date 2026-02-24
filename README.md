@@ -1,11 +1,11 @@
-# Organism Bc394
+# Organism Bc394 Genome Assembly
 CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Organism Information</summary>
   name species info stuff here
 </details>
 
-# Getting Started
+## Getting Started
 <details>
   <summary>Setting Up The Workspace</summary>
 1. Set up of VM using code
@@ -38,7 +38,7 @@ CS485G: Applied Bioinformatics S26 Repository
   
 </details>
 
-# Checking Quality and Trimming
+## Checking Quality and Trimming
 <details>
 <summary>Click to expand</summary>
 1. Fastqc was run on raw reads
@@ -89,7 +89,7 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
   grep LH00659 Bc394_2_paired.fastq -A 1 | grep -v "@LH00659" | grep -v "^-" | wc -m
   ```
 
-# Genome Assembly
+## Genome Assembly
   1. Transfer Data to MCC:
 
 ```
