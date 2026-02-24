@@ -3,11 +3,13 @@ CS485G: Applied Bioinformatics S26 Repository
 
 # Organism Bc394
 <details>
-<summary>Click to expand</summary>
+<summary>Organism Information</summary>
   name species info stuff here
 </details>
 
 # Getting Started
+<details>
+  <summary>Setting Up The Workspace</summary>
 1. Set up of VM using code
    
   ```
@@ -19,10 +21,9 @@ CS485G: Applied Bioinformatics S26 Repository
   ```
   wget https://www.cs.uky.edu/~acta225/CS485/workshop-materials.tar.xz
   ```
-
-# Downloading Data
+</details>
 <details>
-<summary>Click to expand</summary>
+<summary>Downloading Data</summary>
   1. Data was downloaded from the Farman Lab computer using the following code:
   
   ```
