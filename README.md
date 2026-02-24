@@ -20,7 +20,7 @@ CS485G: Applied Bioinformatics S26 Repository
   wget https://www.cs.uky.edu/~acta225/CS485/workshop-materials.tar.xz
   ```
 
-## Downloading Data
+# Downloading Data
 <details>
 <summary>Click to expand</summary>
   1. Data was downloaded from the Farman Lab computer using the following code:
@@ -39,7 +39,7 @@ CS485G: Applied Bioinformatics S26 Repository
   
 </details>
 
-## Checking Quality and Trimming
+# Checking Quality and Trimming
 <details>
 <summary>Click to expand</summary>
 1. Fastqc was run on raw reads
@@ -90,7 +90,7 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
   grep LH00659 Bc394_2_paired.fastq -A 1 | grep -v "@LH00659" | grep -v "^-" | wc -m
   ```
 
-## Genome Assembly
+# Genome Assembly
   1. Transfer Data to MCC:
 
 ```
@@ -170,5 +170,52 @@ sbatch velvetoptimiser.sh Bc394 87 107 2
 
   4. Using SPAdes:
 
-  5. Looking at Bandage Plot
+copied slurm script using 
+
+```
+cp /project/farman_s26abt480/SLURM_SCRIPTs/spades.sh /project/farman_s26abt480/xrar222/Bc394
+
+```
+
+Spades script looks like:
+
+```
+#!/bin/bash
+
+#SBATCH --time 48:00:00
+#SBATCH --job-name=spades
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=8
+#SBATCH --partition=short
+#SBATCH --mem=500GB
+#SBATCH --mail-type ALL
+#SBATCH -A cea_farman_s26abt480
+#SBATCH --mail-type ALL
+#SBATCH --mail-user farman@uky.edu,xrar222@uky.edu
+
+echo "SLURM_NODELIST: "$SLURM_NODELIST
+
+readsdir=$1
+
+MyGenome=$2
+
+# now run spades using paired and single end reads
+
+singularity run --app spades3155 /share/singularity/images/ccs/conda/amd-conda9-rocky8.sinf spades.py \
+  --pe1-1 $readsdir/${MyGenome}_1_paired.fastq --pe1-2 $readsdir/${MyGenome}_2_paired.fastq \
+  --pe1-s $readsdir/${MyGenome}_1_unpaired.fastq --pe1-s $readsdir/${MyGenome}_2_unpaired.fastq \
+  -o ${MyGenome}_spades_assembly
+```
+
+where directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and MyGenome is Bc394
+
+
+
+
+  6. Looking at Bandage Plot
+downloaded Bandage from: https://rrwick.github.io/Bandage/
+Wick R.R., Schultz M.B., Zobel J. & Holt K.E. (2015). Bandage: interactive visualisation of de novo genome assemblies. Bioinformatics, 31(20), 3350-3352.
+
+used scp to download file: 
 
