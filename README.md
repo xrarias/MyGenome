@@ -161,6 +161,13 @@ Submitted job using:
 sbatch velvetoptimiser.sh Bc394 37 117 10
 ```
 where 37 is the suggested kmer length minus 40 and 117 is the suggested kmer length plus 40 for the low and high ranges, and 10 is the step size.
+
+then, to get to the better kmer length based off the optimal velvet hash value of 97, where 87 is the low and 107 is the high, with a step size of 2. The original write out directory was renamed to first_run to prevent overwriting
+
+```
+sbatch velvetoptimiser.sh Bc394 87 107 2
+```
+
   4. Using SPAdes:
 
   5. Looking at Bandage Plot
