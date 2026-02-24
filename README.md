@@ -1,7 +1,5 @@
-# MyGenome
-CS485G: Applied Bioinformatics S26 Repository
-
 # Organism Bc394
+CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Organism Information</summary>
   name species info stuff here
