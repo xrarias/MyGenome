@@ -209,12 +209,40 @@ singularity run --app spades3155 /share/singularity/images/ccs/conda/amd-conda9-
 
 where directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and MyGenome is Bc394
 
+Next, we wanted to look at:
+number of contigs: 
 
+```
+grep -c '^>' Bc394_spades_assembly/scaffolds.fasta
+```
+Final genome size:
 
+```
+awk '/^>/ {next} {total += length($0)} END {print total}' scaffolds.fasta
+```
+
+N50: 
+
+```
+awk '/^>/ {if (l){print l}; l=0; next} {l+=length($0)} END {print l}' scaffolds.fasta \
+| sort -nr \
+| awk '{sum+=$1; a[NR]=$1} END {
+    half=sum/2; running=0;
+    for (i=1;i<=NR;i++){
+        running+=a[i];
+        if (running>=half){print a[i]; break}
+    }
+}'
+
+```
+
+It was determined that the Velvet assembly using step size 2 was best, so we looked into Bandage next
 
   6. Looking at Bandage Plot
 downloaded Bandage from: https://rrwick.github.io/Bandage/
 Wick R.R., Schultz M.B., Zobel J. & Holt K.E. (2015). Bandage: interactive visualisation of de novo genome assemblies. Bioinformatics, 31(20), 3350-3352.
 
 used scp to download file: 
-
+```
+scp xrar222@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/Bc394/velvet_Bc394_87_107_2_noclean/Graph2 C:\Users\xrar222\Downloads​
+```
