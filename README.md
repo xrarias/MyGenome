@@ -508,5 +508,30 @@ cat $genome | python3 RESOURCES/fcs.py clean genome \
 Submitted:
 
 ```
-sbatch /project/farman_s26abt480/xrar222/Bc394/GenomePostProcess.sh /project/farman_s26abt480/xrar222/Bc394/Bc394_newheader.fasta
+sbatch /project/farman_s26abt480/xrar222/Bc394/GenomePostProcess.sh ./Bc394_newheader.fasta
 ```
+
+Final Assembly Data
+
+Used Seqkit 
+```
+ singularity run --app seqkit2900 /share/singularity/images/ccs/conda/amd-conda19-rocky9.sinf seqkit stats Bc394_final.fasta
+```
+Output was:
+```
+file               format  type  num_seqs     sum_len  min_len   avg_len  max_len
+Bc394_final.fasta  FASTA   DNA      2,960  43,534,695      200  14,707.7  307,413
+```
+And N50 was calculated using:
+```
+awk '/^>/ {if (l) print l; l=0; next} {l+=length($0)} END {print l}' Bc394_final.fasta | sort -nr | awk '{t+=$1; a[NR]=$1} END {h=t/2; s=0; for(i=1;i<=NR;i++){s+=a[i]; if(s>=h){print a[i]; exit}}}'
+```
+
+Therefore:
+a. Genome Size: 43,534,695
+b. Number of Contigs: 2,960
+c. N50: 71,435
+
+Fold Coverage was calculated:
+Total # of bases / Genome Size
+
