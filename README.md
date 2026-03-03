@@ -235,8 +235,68 @@ awk '/^>/ {if (l){print l}; l=0; next} {l+=length($0)} END {print l}' scaffolds.
 }'
 
 ```
+Dr Farman and I then wondered if using Spades without the unpaired reads would work best, so I tested it on my genome. Spades then did a much better job of assembling. 
 
-It was determined that the Velvet assembly using step size 2 was best, so we looked into Bandage next
+Spades new script only using paired reads looks like:
+
+```
+#!/bin/bash
+
+#SBATCH --time 48:00:00
+#SBATCH --job-name=spades
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --cpus-per-task=8
+#SBATCH --partition=short
+#SBATCH --mem=500GB
+#SBATCH --mail-type ALL
+#SBATCH -A cea_farman_s26abt480
+#SBATCH --mail-type ALL
+#SBATCH --mail-user farman@uky.edu,xrar222@uky.edu
+
+echo "SLURM_NODELIST: "$SLURM_NODELIST
+
+readsdir=$1
+
+MyGenome=$2
+
+# now run spades using paired reads only
+
+singularity run --app spades3155 /share/singularity/images/ccs/conda/amd-conda9-rocky8.sinf spades.py \
+  --pe1-1 $readsdir/${MyGenome}_1_paired.fastq --pe1-2 $readsdir/${MyGenome}_2_paired.fastq \
+  -o ${MyGenome}_spades_assembly
+```
+
+where directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and MyGenome is Bc394
+
+Next, we wanted to look at:
+number of contigs: 
+
+```
+grep -c '^>' Bc394_spades_assembly_noUnpairedReads/scaffolds.fasta
+```
+Final genome size:
+
+```
+awk '/^>/ {next} {total += length($0)} END {print total}' scaffolds.fasta
+```
+
+N50: 
+
+```
+awk '/^>/ {if (l){print l}; l=0; next} {l+=length($0)} END {print l}' scaffolds.fasta \
+| sort -nr \
+| awk '{sum+=$1; a[NR]=$1} END {
+    half=sum/2; running=0;
+    for (i=1;i<=NR;i++){
+        running+=a[i];
+        if (running>=half){print a[i]; break}
+    }
+}'
+
+```
+
+It was determined that using the Spades assembly using only paired reads was best, so we looked into Bandage next
 
   6. Looking at Bandage Plot
 downloaded Bandage from: https://rrwick.github.io/Bandage/
@@ -244,5 +304,209 @@ Wick R.R., Schultz M.B., Zobel J. & Holt K.E. (2015). Bandage: interactive visua
 
 used scp to download file: 
 ```
-scp xrar222@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/Bc394/velvet_Bc394_87_107_2_noclean/Graph2 C:\Users\xrar222\Downloads​
+scp xrar222@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/Bc394_spades_assembly_noUnpairedReads/assembly_graph_with_scaffolds.gfa C:\Users\xrar222\Downloads​
+```
+
+Here were the images resulting from using Bandage as directed in Module 3:
+<img width="308" height="311" alt="Bandange_SpadesGraphNode_Bc394_SNIP" src="https://github.com/user-attachments/assets/255e9900-d552-4959-8686-c9a234c2487f" />
+
+<img width="723" height="431" alt="Bandange_SpadesGraphNode_Bc394" src="https://github.com/user-attachments/assets/d2d19b07-14a2-4660-b51a-c08507a59d4d" />
+
+
+7. Genome Post-Processing
+The Spades Paired-Only genome was determined to be the best for continuing, so post processing occured on this genome.
+
+
+a. Standardizing Headers
+I moved /project/farman_s26abt480/xrar222/Bc394/Bc394_spades_assembly_noUnpairedReads/scaffolds.fasta to my working directory
+
+```
+cp /project/farman_s26abt480/xrar222/Bc394/Bc394_spades_assembly_noUnpairedReads/scaffolds.fasta /project/farman_s26abt480/xrar222/Bc394
+```
+Moved script to simplify fasta headers into working directory using code: 
+
+```
+cp /project/farman_s26abt480/SCRIPTs/SimpleFastaHeaders.pl /project/farman_s26abt480/xrar222/Bc394
+```
+
+Ran a perl script to rename the sequence headers to a standardized format
+
+```
+#!/usr/bin/perl
+
+die "Usage: perl SimpleFastaHeaders.pl <dirname/filename>\n" if @ARGV < 1;
+
+HEADER($ARGV[0]) if -f $ARGV[0];
+
+& READ_DIR if -d $ARGV[0];
+
+sub READ_DIR {
+
+  ($indir = $ARGV[0]) =~ s/\/$//;
+
+  opendir(FASTADIR, $indir) || die "There is not a directory of that name in the path you specified. Please try again\n\n";
+
+  @FASTA = readdir(FASTADIR);
+
+  $Success = 'no';
+
+  foreach $Fasta (@FASTA) {
+
+    print "$Fasta\n";
+
+    if($Fasta =~ /fasta|fsa|fa|fna|mfa$/) {
+
+      HEADER($Fasta);
+
+      $Success='yes'
+
+    }
+    else {
+      die "Sequence file(s) must end with fasta|fsa|fa|fna|mfa suffix\n";
+    }
+}
+
+  close FASTADIR;
+
+  die "No fasta files detected in specified directory. Genome assembly names must end in one of these suffixes: fasta|fsa|fa|fna|m$
+
+}
+
+
+sub HEADER {
+
+  my $SeqNo = 0;
+
+  my $Fasta = @_[0];
+
+  @filepath = split(/\//, $Fasta);
+$Genome_ID = $filepath[-1];
+
+  $Genome_ID =~ s/_.+|\..+//;
+
+  if(@ARGV == 2) {
+
+    $Genome_ID = $ARGV[1];
+
+    $outfile = $Genome_ID."_newheader.fasta";
+
+    print "$outfile\n";
+
+  }
+
+  else {
+
+    print "$Fasta\n";
+    ($outfile = $Fasta) =~ s/.+\///;            # Strip off file path
+
+    $outfile =~ s/_.*/_newheader.fasta/;
+
+    print "$outfile\n";
+
+  }
+
+  open(FASTAOUT, '>', "$outfile") || die "Problem creating corrected genome file: $!\n";
+
+  open(MAPOUT, '>', "$Genome_ID"."_contig_map.txt") || die "Problem creating contig mapping file\n" ;
+
+  print MAPOUT "Old-genomeID\tNew-genomeID\n$oldGenome_ID\t$Genome_ID\nNew_ID\t\tOld_ID\n$oldGenome_ID\t$Genome_ID\n";
+
+  print "Re-naming sequence headers for easy parsing in downstream applications\n";
+open(FASTA, "$Fasta");
+
+  while($Line = <FASTA>) {
+
+    if($Line =~ /^>/) {
+
+      $SeqNo ++;
+
+      print FASTAOUT ">$Genome_ID"."_contig$SeqNo\n";
+
+      $Line =~ s/^>//;
+
+      print MAPOUT "$Genome_ID"."_contig$SeqNo\t$Line"
+
+    }
+
+    else {
+      print FASTAOUT "$Line"
+
+    }
+
+  }
+
+  close FASTA;
+
+  close FASTAOUT;
+
+  close MAPOUT;
+
+  print   "\n########################################################\n\n".
+        "Sequence headers have been converted and written to the file: $outfile\n".
+        "Mapping between new and old sequence IDs was written to the file: $Genome_ID"."_contig_map.txt\n\n"
+}
+
+print "Conversion(s) finished.\n";
+```
+Submitted using
+
+```
+perl SimpleFastaHeaders.pl /project/farman_s26abt480/xrar222/Bc394/scaffolds.fasta Bc394
+```
+
+Now, headers that looked like >NODE_1_length_307413_cov_14.483598 now look like Bc394_contig1
+
+b. Removing contigs <200bp and removing adaptor sequences
+
+Copied processing script:
+```
+cp /project/farman_s26abt480/SLURM_SCRIPTs/GenomePostProcess.sh /project/farman_s26abt480/xrar222/Bc394
+```
+Script looks like: 
+```
+#!/bin/bash
+
+#SBATCH --time 8:00:00
+#SBATCH --job-name=GenomePostProcess
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=normal
+#SBATCH --mem=180GB
+#SBATCH --mail-type ALL
+#SBATCH -A cea_farman_s26abt480
+#SBATCH --mail-type ALL
+#SBATCH --mail-user farman@uky.edu,xrar222@uky.edu
+
+echo "SLURM_NODELIST: "$SLURM_NODELIST
+echo "PWD :" $PWD
+
+
+# Arguments
+
+genome=$1
+prefix=${genome/_*/}
+basename=${prefix/*\//}
+
+cp -r /project/farman_s26abt480/RESOURCES .
+
+# identify adaptors
+module load ccs/conda/python/3.9.6
+export FCS_LOC="/share/apps/amd/fcs/adaptor"
+outdir=${basename}_FCS
+mkdir $outdir
+$FCS_LOC/run_fcsadaptor.sh --fasta-input $genome --output-dir $outdir \
+ --euk --container-engine singularity --image $FCS_LOC/fcs-adaptor.sif
+
+# trim/remove adaptors and contigs < 200 nt in length
+export FCS_DEFAULT_IMAGE=RESOURCES/fcs-gx.sif
+cat $genome | python3 RESOURCES/fcs.py clean genome \
+  --action-report ${basename}_FCS/fcs_adaptor_report.txt --output ${basename}_final.fasta
+
+```
+
+Submitted:
+
+```
+sbatch /project/farman_s26abt480/xrar222/Bc394/GenomePostProcess.sh /project/farman_s26abt480/xrar222/Bc394/Bc394_newheader.fasta
 ```
