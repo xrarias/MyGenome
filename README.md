@@ -39,18 +39,18 @@ CS485G: Applied Bioinformatics S26 Repository
 </details>
 
 ## Assessing Sequence Quality And Trimming
+-need to include fastQC code and versions of fastq and trimmomatic
 <details>
-<summary>Click to expand</summary>
-1. Fastqc was run on raw reads
-  
+<summary>FastQC pt. 1</summary>
+1. FastQC was first used on the raw reads using the following code:
 ```
     fastqc ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz -o ~/sequences/
 ```
 
 </details>
-2. Adaptors were trimmed, see below for sequences:
 <details>
-<summary>Click to expand</summary>
+<summary>Adaptors</summary>
+1. Adaptors were trimmed, see below for sequences:
  >PrefixNX/1
 AGATGTGTATAAGAGACAG
 >PrefixNX/2
@@ -68,12 +68,13 @@ GATCGGAAGAGCACACGTCTGAACTCCAGTCACTTAGGCATCTCGTATGC
 >polyG
 GGGGGGGGGGGGGGGGGGGG
 </details>
-3. Trimmomatic was run using this code:
-
+<details>
+<summary>Trimmomatic</summary>
+1. Trimmomatic 
   ```
 java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz ./Bc394/Bc394_1_paired.fastq ./Bc394/Bc394_1_unpaired.fastq ./Bc394/Bc394_2_paired.fastq ./Bc394/Bc394_2_unpaired.fastq ILLUMINACLIP:adaptors.fa:2:30:10 SLIDINGWINDOW:20:20 MINLEN:125
   ```
-
+<details>
 4. Fast QC was run again using this code on the paired and unpaired trimmed reads:
    
   ```
