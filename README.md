@@ -74,7 +74,7 @@ GGGGGGGGGGGGGGGGGGGG
   ```
 java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz ./Bc394/Bc394_1_paired.fastq ./Bc394/Bc394_1_unpaired.fastq ./Bc394/Bc394_2_paired.fastq ./Bc394/Bc394_2_unpaired.fastq ILLUMINACLIP:adaptors.fa:2:30:10 SLIDINGWINDOW:20:20 MINLEN:125
   ```
-<details>
+</details>
 4. Fast QC was run again using this code on the paired and unpaired trimmed reads:
    
   ```
