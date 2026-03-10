@@ -619,3 +619,57 @@ Dependencies and versions:
         busco: 5.7.0
 ```
 ## Using BLAST, Visualizing Genes, Performing Gene Predictions
+
+Using BLAST to find Mitochondrial sequences:
+```
+#!/bin/bash
+
+#SBATCH --time 8:00:00
+#SBATCH --job-name=BLASTn
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --partition=normal
+#SBATCH --mem=180GB
+#SBATCH --mail-type ALL
+#SBATCH -A cea_farman_s26abt480
+#SBATCH --mail-type ALL
+#SBATCH --mail-user xrar222@uky.edu
+
+singularity run --app blast2120 /share/singularity/images/ccs/conda/amd-conda1-centos8.sinf blastn -query MoMitochondrion.fasta -subject Bc394_final.fasta -evalue 1e-50 -max_target_seqs 20000 -outfmt '6 qseqid sseqid slen length qstart qend sstart send btop' -out MoMitochondrion.Bc394.BLAST
+```
+Sorting to only find the sequences that are 90% match or above:
+```
+awk '$4/$3 >= 0.9 {print $2 ",mitochondrion"}' MoMitochondrion.Bc394.BLAST > Bc394_mitochondrion.csv
+```
+Then creating a different file to only find sequencines 90% match or below, so we can assess split parts
+
+```
+awk '$4/$3 <= 0.9 {print}' MoMitochondrion.Bc394.BLAST > Bc394_short_mitochondrial_hits.txt
+```
+FIGURING OUT MITOCHONDRIA
+
+qseqid 		sseqid 			slen 	length 	qstart 	qend 	sstart 	send 	btop
+MoMito.70-15    Bc394_contig1122        3166    1638    30377   32013   3166    1529    35AT950-A651
+MoMito.70-15    Bc394_contig1122        3166    1428    31937   33364   1428    1       90TA337AC999
+MoMito.70-15    Bc394_contig1462        1076    550     16830   17379   550     1       550
+MoMito.70-15    Bc394_contig1462        1076    534     16846   17379   543     1076    534
+MoMito.70-15    Bc394_contig1681        650     344     20997   21340   1       343     340C-3
+MoMito.70-15    Bc394_contig1681        650     344     20997   21340   650     308     340C-3
+
+Looking for where two separate sequences line up to the contig (query is mito, contig is subject)
+
+slen 		Full length of the subject sequence
+length 		Length of the aligned segment (HSP)
+qstart 		Start coordinate on query
+qend 		End coordinate on query
+sstart 		Start coordinate on subject
+send		End coordinate on subject
+
+so therefore:
+Bc394_contig1122,mitochondrion
+Bc394_contig1462,mitochondrion
+Bc394_contig1681,mitochondrion
+  were added to .csv
+  because contig1122 had a 101 base difference (possible gap)
+  and contig1462 and contig1681 overlapped. 
