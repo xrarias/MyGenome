@@ -147,6 +147,9 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
   ```
   grep LH00659 Bc394_2_paired.fastq -A 1 | grep -v "@LH00659" | grep -v "^-" | wc -m
   ```
+
+Cleaned reads used for assembly (paired only; single end): 5,391,917	
+Total bases in cleaned reads (paired only; R1 + R2): 1,621,261,296
 </details>
 
 ## Optimizing Genome Assembly 
