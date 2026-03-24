@@ -2,7 +2,9 @@
 CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Organism Information</summary>
-  name species info stuff here
+Organism: Pyricularia oryzae
+Host of Organism: Bromus catharticus
+Name of 
 </details>
 
 ## Retrieving Dataset
