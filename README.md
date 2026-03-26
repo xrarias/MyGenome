@@ -732,6 +732,7 @@ awk '$4/$3 <= 0.9 {print}' MoMitochondrion.Bc394.BLAST > Bc394_short_mitochondri
 ```
 FIGURING OUT MITOCHONDRIA
 
+```
 qseqid 		sseqid 			slen 	length 	qstart 	qend 	sstart 	send 	btop
 MoMito.70-15    Bc394_contig1122        3166    1638    30377   32013   3166    1529    35AT950-A651
 MoMito.70-15    Bc394_contig1122        3166    1428    31937   33364   1428    1       90TA337AC999
@@ -739,20 +740,24 @@ MoMito.70-15    Bc394_contig1462        1076    550     16830   17379   550     
 MoMito.70-15    Bc394_contig1462        1076    534     16846   17379   543     1076    534
 MoMito.70-15    Bc394_contig1681        650     344     20997   21340   1       343     340C-3
 MoMito.70-15    Bc394_contig1681        650     344     20997   21340   650     308     340C-3
-
+```
 Looking for where two separate sequences line up to the contig (query is mito, contig is subject)
 
+```
 slen 		Full length of the subject sequence
 length 		Length of the aligned segment (HSP)
 qstart 		Start coordinate on query
 qend 		End coordinate on query
 sstart 		Start coordinate on subject
 send		End coordinate on subject
-
+```
 so therefore:
+
+```
 Bc394_contig1122,mitochondrion
 Bc394_contig1462,mitochondrion
 Bc394_contig1681,mitochondrion
   were added to .csv
   because contig1122 had a 101 base difference (possible gap)
   and contig1462 and contig1681 overlapped. 
+```
