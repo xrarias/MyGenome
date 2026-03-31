@@ -3,7 +3,7 @@ CS485G: Applied Bioinformatics S26 Repository
 <details>
 <summary>Organism Information</summary>
 
-  
+```
 Organism: Pyricularia oryzae
 
 Host of Organism: Bromus catharticus leaf
@@ -32,7 +32,7 @@ Instrument: NovaSeq X
 
 Extraction: SparQ DNA Library Prep
 
-
+```
 
 </details>
 
@@ -50,6 +50,7 @@ Extraction: SparQ DNA Library Prep
   ```
   wget https://www.cs.uky.edu/~acta225/CS485/workshop-materials.tar.xz
   ```
+
 </details>
 <details>
 <summary>Downloading Data</summary>
@@ -74,23 +75,32 @@ Extraction: SparQ DNA Library Prep
 <details>
 <summary>FastQC pt. 1</summary>
 1. FastQC was first used on the raw reads using the following code:
+  
 ```
     fastqc ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz -o ~/sequences/
 ```
+
 2. Orange and red quality messages from FastQC for the raw data are below:
   Read 1:
-    Per tile sequence quality (yellow))
+
+```
+    Per tile sequence quality (yellow)
     Per base sequence content (red)
     Per sequence GC content (yellow)
     Overrepresented sequences (yellow)
-    Adaptor Content (red)
+    Adaptor content (red)
+```
+
   <img width="959" height="362" alt="Read1RawFastQCReport Bc394" src="https://github.com/user-attachments/assets/9138ba46-4ca6-48bd-8384-f314a5f9d791" />
 
+```
   Read 2:
     Per base sequence content (red)
     Per sequence GC content (yellow)
     Overrepresented sequences(yellow)
     Adaptor content (red)
+```
+
   <img width="954" height="357" alt="Read2RawFastQCReport Bc394" src="https://github.com/user-attachments/assets/ea9bf506-77d4-4e0b-b5e4-3e1c2a6bc1b0" />
 
 </details>
@@ -124,6 +134,7 @@ GGGGGGGGGGGGGGGGGGGG
   ```
 java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz ./Bc394/Bc394_1_paired.fastq ./Bc394/Bc394_1_unpaired.fastq ./Bc394/Bc394_2_paired.fastq ./Bc394/Bc394_2_unpaired.fastq ILLUMINACLIP:adaptors.fa:2:30:10 SLIDINGWINDOW:20:20 MINLEN:125
   ```
+
 </details>
 <details>
 <summary>FastQC pt. 2</summary>
@@ -132,38 +143,49 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
   ```
   fastqc /home/xrar222/sequences/Bc394/Bc394_1_unpaired.fastq /home/xrar222/sequences/Bc394/Bc394_1_paired.fastq /home/xrar222/sequences/Bc394/Bc394_2_unpaired.fastq /home/xrar222/sequences/Bc394/Bc394_2_paired.fastq -o /home/xrar222/sequences
   ```
+
 2. Orange and red quality messages from FastQC for the trimmed data are below:
+
+```
   Read 1 Paired:
    Per tile sequence quality (yellow)
    Per base sequence content (red)
    Per sequence GC content (yellow)
    Sequence length distribution (yellow)
+```
+
 <img width="955" height="369" alt="Read1PairedTrimmedFastQCReport Bc394" src="https://github.com/user-attachments/assets/3907a69a-1565-46d5-8fad-22adab4ed9da" />
 
-   
+   ```
   Read 1 Unpaired:
    Per tile sequence quality (yellow)
    Per base sequence content (red)
    Per sequence GC content (yellow)
    Sequence length distribution (yellow)
+```
+
 <img width="959" height="364" alt="Read1UnpairedTrimmedFastQCReport Bc394" src="https://github.com/user-attachments/assets/4212e10b-1feb-41ee-8090-bb37a7824a43" />
 
-   
+  ```
   Read 2 Paired:
    Per tile sequence quality (yellow)
    Per base sequence content (red)
    Per sequence GC content (yellow)
    Sequence length distribution (yellow)
-   Adapter Content (yellow)
+   Adapter content (yellow)
+```
+
 <img width="956" height="365" alt="Read2PairedTrimmedFastQCReport Bc394" src="https://github.com/user-attachments/assets/dbb00a54-51ed-47ca-a01b-5c1f4209a1c4" />
 
-   
+   ```
   Read 2 Unpaired:
    Per tile sequence quality (yellow)
    Per base sequence content (red)
    Per sequence GC content (yellow)
    Sequence length distribution (yellow)
-   Adapter Content (red)
+   Adapter content (red)
+```
+
 <img width="959" height="371" alt="Read2UnpairedTrimmedFastQCReport Bc394" src="https://github.com/user-attachments/assets/2d5a8a53-ab3e-4c97-bf73-cef17af6dd96" />
 
 </details>
@@ -180,6 +202,7 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
   ```
 
 Cleaned reads used for assembly (paired only; single end): 5,391,917	
+
 Total bases in cleaned reads (paired only; R1 + R2): 1,621,261,296
 </details>
 
@@ -198,10 +221,11 @@ scp xrar222@xrar222.cs.uky.edu:/home/xrar222/sequences/Bc394/Bc394_2_unpaired.fa
 </details>
 
 <details>
-<summary>Using Velvet</summary>
-  Used Velvet Advisor (https://dna.med.monash.edu/~torsten/velvet_advisor/) to determine 77 was the suggested kmer length (based on 5.39 million reads, 150bp length, paired end, 20 fold coverage,and a 40Mbp genome size)
+<summary>Using Velvet 2.2.6 to Assemble</summary>
+  
+  Used Velvet Advisor (https://dna.med.monash.edu/~torsten/velvet_advisor/) to determine 77 was the suggested kmer length (based on 5.39 million reads, 150bp length, paired end, 20 fold coverage, and a 40Mbp genome size)
 
-<summary>Velvet Assembly Script 10 step</summary>
+Velvet Assembly Script using 10 step process:
   
  ``` 
 #!/bin/bash
@@ -258,24 +282,17 @@ Submitted job using:
 ```
 sbatch velvetoptimiser.sh Bc394 37 117 10
 ```
-where 37 is the suggested kmer length minus 40 and 117 is the suggested kmer length plus 40 for the low and high ranges, and 10 is the step size.
+where the high and low ranges are dictated by 37 as the suggested kmer length minus 40 and 117 as the suggested kmer length plus 40. The final part of the command, 10, is the step size.
 
-then, to get to the better kmer length based off the optimal velvet hash value of 97, where 87 is the low and 107 is the high, with a step size of 2. The original write out directory was renamed to first_run to prevent overwriting
+The result of this first Velvet run (step 10) led to determining the optimal Velvet hash value was 97. To discover the actual ideal kmer length, 87 was used as a low and 107 was used as a high, with a step size of 2. The original write out directory was renamed to first_run to prevent overwriting with this second run. 
 
 ```
 sbatch velvetoptimiser.sh Bc394 87 107 2
 ```
 </details>
-### Using SPAdes:
+<summary> Using SPAdes 3.15.5 to Assemble</summary>
 
-copied slurm script using 
-
-```
-cp /project/farman_s26abt480/SLURM_SCRIPTs/spades.sh /project/farman_s26abt480/xrar222/Bc394
-
-```
-
-Spades script looks like:
+The SPAdes script used is as follows:
 
 ```
 #!/bin/bash
@@ -306,14 +323,16 @@ singularity run --app spades3155 /share/singularity/images/ccs/conda/amd-conda9-
   -o ${MyGenome}_spades_assembly
 ```
 
-where directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and MyGenome is Bc394
+Where, when submitted, the directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and the MyGenome is Bc394.
 
 Next, we wanted to look at:
-number of contigs: 
+
+Number of contigs: 
 
 ```
 grep -c '^>' Bc394_spades_assembly/scaffolds.fasta
 ```
+
 Final genome size:
 
 ```
@@ -334,9 +353,9 @@ awk '/^>/ {if (l){print l}; l=0; next} {l+=length($0)} END {print l}' scaffolds.
 }'
 
 ```
-Dr Farman and I then wondered if using Spades without the unpaired reads would work best, so I tested it on my genome. Spades then did a much better job of assembling. 
+Dr Farman and I then wondered if using SPAdes without the unpaired reads would work best, so I tested it on my genome.
 
-Spades new script only using paired reads looks like:
+The new SPAdes script using only paired reads is as follows:
 
 ```
 #!/bin/bash
@@ -366,14 +385,16 @@ singularity run --app spades3155 /share/singularity/images/ccs/conda/amd-conda9-
   -o ${MyGenome}_spades_assembly
 ```
 
-where directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and MyGenome is Bc394
+Where, when submitted, the directory (readsdir) is /project/farman_s26abt480/xrar222/Bc394 and the MyGenome is Bc394.
 
-Next, we wanted to look at:
-number of contigs: 
+Again, we looked at:
+
+Number of contigs: 
 
 ```
 grep -c '^>' Bc394_spades_assembly_noUnpairedReads/scaffolds.fasta
 ```
+
 Final genome size:
 
 ```
@@ -395,7 +416,8 @@ awk '/^>/ {if (l){print l}; l=0; next} {l+=length($0)} END {print l}' scaffolds.
 
 ```
 
-It was determined that using the Spades assembly using only paired reads was best, so we looked into Bandage next
+It was determined that using the SPAdes assembly using only paired reads was signficantly better.
+
 
 ## Bandage Plot
 downloaded Bandage from: https://rrwick.github.io/Bandage/
