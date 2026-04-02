@@ -74,7 +74,7 @@ Extraction: SparQ DNA Library Prep
 -need to include fastQC code and versions of fastq and trimmomatic
 <details>
 <summary>FastQC pt. 1</summary>
-1. FastQC was first used on the raw reads using the following code:
+1. FastQC (v0.10.1) was first used on the raw reads using the following code:
   
 ```
     fastqc ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz -o ~/sequences/
@@ -129,7 +129,7 @@ GGGGGGGGGGGGGGGGGGGG
 </details>
 <details>
 <summary>Trimmomatic</summary>
-1. Trimmomatic was run to trim the data.
+1. Trimmomatic (v0.38) was run to trim the data.
   
   ```
 java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt ./Bc394/Bc394_1.fq.gz ./Bc394/Bc394_2.fq.gz ./Bc394/Bc394_1_paired.fastq ./Bc394/Bc394_1_unpaired.fastq ./Bc394/Bc394_2_paired.fastq ./Bc394/Bc394_2_unpaired.fastq ILLUMINACLIP:adaptors.fa:2:30:10 SLIDINGWINDOW:20:20 MINLEN:125
@@ -138,7 +138,7 @@ java -jar trimmomatic-0.38.jar PE -threads 2 -phred33 -trimlog Br80_errorlog.txt
 </details>
 <details>
 <summary>FastQC pt. 2</summary>
-1. Fast QC was run again using this code on the paired and unpaired trimmed reads:
+1. Fast QC (v0.10.1) was run again using this code on the paired and unpaired trimmed reads:
    
   ```
   fastqc /home/xrar222/sequences/Bc394/Bc394_1_unpaired.fastq /home/xrar222/sequences/Bc394/Bc394_1_paired.fastq /home/xrar222/sequences/Bc394/Bc394_2_unpaired.fastq /home/xrar222/sequences/Bc394/Bc394_2_paired.fastq -o /home/xrar222/sequences
