@@ -951,12 +951,7 @@ forge export.ann export.dna
 hmm-assembler.pl Moryzae . > Moryzae.hmm
 ```
 
-14. The Moryzae.hmm file was transferred from the VM to the MCC (from within the MCC)
-
-```
-scp xrar222@xrar222.cs.uky.edu:/home/xrar222/genes/snap/Moryzae.hmm /project/farman_s26abt480/xrar222/Bc394/MAKER
-```
-15. And the final genome file was transferred from the MCC to the VM:
+14. The final genome file was transferred from the MCC to the VM:
 
 ```
 scp /project/farman_s26abt480/xrar222/FinalSubmittedToNCBI/Bc394_final.fasta xrar222@xrar222.cs.uky.edu:/home/xrar222/genes/snap/
@@ -987,7 +982,7 @@ fathom Bc394-snap.zff Bc394_final.fasta -gene-stats
 586.166931 mean exon (min=4 max=19581)
 106.837311 mean intron (min=4 max=1410)
 ```
-4. The number of genes present was verified as 12,672 using this code:
+4. The number of genes found by snap was verified as 12,672 using this code:
 
 ```
 awk '{print $9}' Bc394-snap.gff2 | sort -u | wc -l
@@ -1007,9 +1002,41 @@ snap-hmm Moryzae.hmm Bc394_final.fasta -gff > Bc394-snap.gff2
 ```
 augustus --species=magnaporthe_grisea --gff3=on --singlestrand=true --progress=true Bc394_final.fasta > Bc394-augustus.gff3
 ```
-  
+
+2. The number of genes found by Augustus was verified as 17,578 using this code:
+
+```
+grep "^# start gene" Bc394-augustus.gff3 | wc -l
+```
+
 </details>
 <details>
 <summary>Running MAKER</summary>
 
+1. The Moryzae.hmm, ncbi-cds-Magnaporthe_organism.fasta, ncbi-protein-Magnaporthe_organism.fasta, and final BC394 fasta was transferred from the VM to the MCC or copied from a different location (from within the MCC):
+
+```
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/genes/snap/Moryzae.hmm /project/farman_s26abt480/xrar222/Bc394/MAKER
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/genes/maker/genbank/ncbi-cds-Magnaporthe_organism.fasta /project/farman_s26abt480/xrar222/Bc394/MAKER
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/genes/maker/genbank/ncbi-protein-Magnaporthe_organism.fasta /project/farman_s26abt480/xrar222/Bc394/MAKER
+cp /project/farman_s26abt480/xrar222/FinalSubmittedToNCBI/Bc394_final.fasta /project/farman_s26abt480/xrar222/Bc394/MAKER
+```
+
+2. MAKER configuration files were made using this code:
+
+```
+singularity exec /share/singularity/images/ccs/MAKER/amd-maker-debian10.sinf maker -CTL
+```
+
+3. maker_opts.ctl was opened using nano and the following changes were made:
+
+```
+genome=/project/farman_s26abt480/xrar222/Bc394/MAKER/Bc394_final.fasta
+model_org=
+repeat_protein=
+snaphmm=/project/farman_s26abt480/xrar222/Bc394/MAKER/Moryzae.hmm
+augustus_species=magnaporthe_grisea
+keep_preds=1
+protein=/project/farman_s26abt480/xrar222/Bc394/MAKER/ncbi-protein-Magnaporthe_organism.fasta
+```
 </details>
