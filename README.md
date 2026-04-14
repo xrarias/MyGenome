@@ -1111,15 +1111,20 @@ scp xrar22@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/MAKER/Bc394-maker
 <img width="515" height="351" alt="GeneSnapOnly" src="https://github.com/user-attachments/assets/a8fbb967-c067-4ce1-ab4c-eeb8dadc37ff" />
 
 3b. A screen shot of IGV browser window showing an example of a gene predicted only by AUGUSTUS
-<img width="946" height="317" alt="GeneAugustusOnly" src="https://github.com/user-attachments/assets/bc416c95-282f-4a8c-87b6-362558f3d9ec" />
+<img width="845" height="540" alt="AugustusOnlyfinal" src="https://github.com/user-attachments/assets/1beede5b-6f60-4dc5-a50f-949ba2080654" />
 
-3c. A screen shot of a gene where snap and AUGUSTUS predict the same exon/intron structure
+3c. A screen shot of IGV browser window showing an example of a gene predicted only by MAKER
+<img width="787" height="470" alt="image" src="https://github.com/user-attachments/assets/552190c6-7c6d-4c40-bb2e-2f5c0e1e65bc" />
+
+3d. A screen shot of a gene where snap and AUGUSTUS predict the same exon/intron structure
 <img width="763" height="334" alt="BothGene" src="https://github.com/user-attachments/assets/93667ae1-6adc-4d52-bf22-b3b413764188" />
 
-3d. A screen shot of a gene where snap and AUGUSTUS predict a different exon/intron structure
+3e. Screenshots of genes where snap and AUGUSTUS predict a different exon/intron structure
+<img width="946" height="317" alt="GeneAugustusOnly" src="https://github.com/user-attachments/assets/50bb8a27-d6b9-4ebd-922f-dbcaee47e855" />
+
 <img width="775" height="335" alt="image" src="https://github.com/user-attachments/assets/ea062fae-26fb-4cb7-a45a-cf0ffaf492fd" />
 
-3e. A screen shot where a gene was successfully predicted by snap, AUGUSTUS, and MAKER with external evidence that the prediction is correct
+3f. A screen shot where a gene was successfully predicted by snap, AUGUSTUS, and MAKER with external evidence that the prediction is correct
 
 <img width="601" height="555" alt="image" src="https://github.com/user-attachments/assets/2e430e9d-cb05-4ee3-834e-f22f95069693" />
 
