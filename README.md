@@ -1,26 +1,6 @@
 # Organism Bc394 Genome Assembly
 
 CS485G: Applied Bioinformatics S26 Repository
-```
-                           ___________ _
-                      __/   .::::.-'-(/-/)
-                    _/:  .::::.-' .-'\/\_`,
-                   /:  .::::./   -._-.  d\|
-                    /: (""""/    '.  (__/||
-                     \::).-'  -._  \/ \\/\|
-             __ _ .-'`)/  '-'. . '. |  (i_O
-         .-'      \       -'      '\|
-    _ _./      .-'|       '.  (    \\
- .-'   :      '_  \         '-'\  /|/
-/      )\_      '- )_________.-|_/^\
-(   .-'   )-._-:  /        \(/\'-._ `.
- (   )  _//_/|:  /          `\()   `\_\
-  ( (   \()^_/)_/             )/      \\
-   )     \\ \(_)             //        )\
-         _o\ \\\            (o_       |__\
-         \ /  \\\__          )_\
-               ^)__\
-```
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 <details>
@@ -1109,10 +1089,15 @@ sbatch maker.sh /project/farman_s26abt480/xrar222/Bc394/MAKER/Bc394_final.fasta
 
 singularity exec /share/singularity/images/ccs/MAKER/amd-maker-debian10.sinf gff3_merge -d Bc394_final.maker.output/Bc394_final_master_datastore_index.log -o Bc394-maker.gff3
 ```
-10. The number of genes found by MAKER was verified as 13,098 using this code:
+10a. The number of genes found by MAKER was verified as 13,098 using this code:
 
 ```
 grep -P "\tgene\t" Bc394-maker.gff3 | wc -l
+```
+  10b . This code also works for verifying gene count:
+
+```
+awk '$3 == "gene"' Bc394-maker.gff3 | wc -l
 ```
 
 </details>
@@ -1152,4 +1137,29 @@ scp xrar22@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/MAKER/Bc394-maker
 <img width="601" height="555" alt="image" src="https://github.com/user-attachments/assets/2e430e9d-cb05-4ee3-834e-f22f95069693" />
 
 
+</details>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<details>
+<summary>NEIGH!</summary>
+  
+```
+                           ___________ _
+                      __/   .::::.-'-(/-/)
+                    _/:  .::::.-' .-'\/\_`,
+                   /:  .::::./   -._-.  d\|
+                    /: (""""/    '.  (__/||
+                     \::).-'  -._  \/ \\/\|
+             __ _ .-'`)/  '-'. . '. |  (i_O
+         .-'      \       -'      '\|
+    _ _./      .-'|       '.  (    \\
+ .-'   :      '_  \         '-'\  /|/
+/      )\_      '- )_________.-|_/^\
+(   .-'   )-._-:  /        \(/\'-._ `.
+ (   )  _//_/|:  /          `\()   `\_\
+  ( (   \()^_/)_/             )/      \\
+   )     \\ \(_)             //        )\
+         _o\ \\\            (o_       |__\
+         \ /  \\\__          )_\
+               ^)__\
+```
 </details>
