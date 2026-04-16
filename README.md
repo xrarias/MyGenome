@@ -33,7 +33,7 @@ CS485G: Applied Bioinformatics S26 Repository
   mv ./sequences/Be394/Bc394_CKDL250033905-1A_2335FYLT4_L1_1.fq.gz ./sequences/Be394/Be394_1.fq.gz
   mv ./sequences/Be394/Bc394_CKDL250033905-1A_2335FYLT4_L1_2.fq.gz ./sequences/Be394/Be394_2.fq.gz
   ```
-
+</details>
   <details>
 <summary>Organism Information</summary>
 
@@ -67,8 +67,6 @@ Instrument: NovaSeq X
 Extraction: SparQ DNA Library Prep
 
 ```
-
-</details>
   
 </details>
 
