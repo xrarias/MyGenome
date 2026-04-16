@@ -853,6 +853,26 @@ Bc394_contig1462,mitochondrion
 Bc394_contig1681,mitochondrion
 ```
 </details>
+<details>
+  <summary>BLASTing Against the B71v2sh Reference Genome</summary>
+1. The final Bc394 genome assembly and B71 reference genome were copied from the MCC to the VM using the following command:
+  
+```
+scp /project/farman_s26abt480/xrar222/FinalSubmittedToNCBI/Bc394_final.fasta xrar222@xrar222.cs.uky.edu:/home/xrar222/blast
+scp /project/farman_s26abt480/BLAST/B71.fasta xrar222@xrar222.cs.uky.edu:/home/xrar222/blast
+```
+
+2. A BLASTn search was performed using the following command to compare the genomes using B71 as the query and Bc394 as the subject.
+   
+```
+blastn -query B71.fasta -subject Bc394_final.fasta -evalue 1e-100 -outfmt 7 > B71.Bc394.BLAST
+```
+3. A BLASTn search was performed using the following command to compare the genomes using Bc394 as the query and B71 as the subject.
+
+```
+blastn -query Bc394_final.fasta -subject B71.fasta -evalue 1e-100 -outfmt 7 > Bc394.B71.BLAST
+```
+</details>
 
 ## Visualizing Genes, Performing Gene Predictions
 <details>
@@ -1136,6 +1156,7 @@ scp xrar22@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/MAKER/Bc394-maker
 
 
 </details>
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 <details>
 <summary>NEIGH!</summary>
