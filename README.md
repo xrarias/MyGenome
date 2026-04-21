@@ -80,17 +80,20 @@ Extraction: SparQ DNA Library Prep
 ```
 
 2. Orange and red quality messages from FastQC for the raw data are below:
-  Read 1:
 
 ```
+Read 1:
     Per tile sequence quality (yellow)
     Per base sequence content (red)
     Per sequence GC content (yellow)
     Overrepresented sequences (yellow)
     Adaptor content (red)
 ```
-
+<details>
+      <summary>2a. Click Here to View FastQC Read 1 Report Image</summary>
   <img width="959" height="362" alt="Read1RawFastQCReport Bc394" src="https://github.com/user-attachments/assets/9138ba46-4ca6-48bd-8384-f314a5f9d791" />
+
+ </details>
 
 ```
   Read 2:
@@ -99,9 +102,10 @@ Extraction: SparQ DNA Library Prep
     Overrepresented sequences(yellow)
     Adaptor content (red)
 ```
-
+<details>
+      <summary>2b. Click Here to View FastQC Read 2 Report Image</summary>
   <img width="954" height="357" alt="Read2RawFastQCReport Bc394" src="https://github.com/user-attachments/assets/ea9bf506-77d4-4e0b-b5e4-3e1c2a6bc1b0" />
-
+</details>
 </details>
 <details>
 <summary>Adaptors</summary>
