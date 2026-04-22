@@ -1554,7 +1554,7 @@ awk 'BEGIN{OFS="\t"; print "##gff-version 3"} $0!~/^#/{st=($7<=$8?"+":"-"); s=($
 scp xrar222@xrar222.cs.uky.edu:/home/xrar222/blast/B71.Bc394.BLAST.gff3 C:\Users\19042\Downloads\IGVforClass
 scp xrar222@xrar222.cs.uky.edu:/home/xrar222/blast/B71.fasta C:\Users\19042\Downloads\IGVforClass
 ```
-6. The gff3 file and B71 reference genome were uploaded into IGV to examine the comparison for parts of the B71 genome that are present that the Bc394 genome did not have.
+6. The gff3 file and B71 reference genome were uploaded into IGV to examine the comparison for parts of the B71 genome that are present that the Bc394 genome did not have. You can see the contents of the gff3 here: [Gff3 B71 v. Bc394}(Bc394/gff3 B71 vs Bc394)
 
 
 </details>
