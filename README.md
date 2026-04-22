@@ -1484,10 +1484,15 @@ singularity exec /share/singularity/images/ccs/MAKER/amd-maker-debian10.sinf gff
 ```
 grep -P "\tgene\t" Bc394-maker.gff3 | wc -l
 ```
-  10b . This code also works for verifying gene count:
+  10b . This code also works for verifying gene count on the gff3 file
 
 ```
 awk '$3 == "gene"' Bc394-maker.gff3 | wc -l
+```
+  10c. The number of gene found by MAKER in the faste file was verified as 13,098 using this code:
+
+```
+grep ">" Bc394.all.maker.proteins.fasta | wc -l
 ```
 
 </details>
@@ -1554,12 +1559,20 @@ awk 'BEGIN{OFS="\t"; print "##gff-version 3"} $0!~/^#/{st=($7<=$8?"+":"-"); s=($
 scp xrar222@xrar222.cs.uky.edu:/home/xrar222/blast/B71.Bc394.BLAST.gff3 C:\Users\19042\Downloads\IGVforClass
 scp xrar222@xrar222.cs.uky.edu:/home/xrar222/blast/B71.fasta C:\Users\19042\Downloads\IGVforClass
 ```
-6. The gff3 file and B71 reference genome were uploaded into IGV to examine the comparison for parts of the B71 genome that are present that the Bc394 genome did not have. You can see the contents of the gff3 here: [Gff3 B71 v. Bc394}(Bc394/gff3 B71 vs Bc394)
+6. The gff3 file and B71 reference genome were uploaded into IGV to examine the comparison for parts of the B71 genome that are present that the Bc394 genome did not have. You can see the contents of the gff3 in the files menu of this repository under "gff3 B71 vs Bc394".
+
+7. Most chromosomes had small missing chunks of anywhere from 50 bp to 4,000bp. Chromosome 5 was the most complete. Chromosome 8 was the most split up. One of the largest missing chunks was on Chromosome 3, spanning 48,000 bp.
+   <details><summary>Click here to see the 48,000bp chunk missing on CHR 3</summary><img width="460" height="206" alt="CHR3Missing" src="https://github.com/user-attachments/assets/f77db2aa-b261-4742-b7df-df46a497ff65" />
+</details>
 
 
 </details>
+<details>
+<summary>Using RNAseq to Confirm Predictions</summary>
+1. 
+</details>
 
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 <details>
 <summary>NEIGH!</summary>
   
