@@ -1547,21 +1547,45 @@ scp xrar22@mcc.uky.edu:/project/farman_s26abt480/xrar222/Bc394/MAKER/Bc394-maker
 <img width="601" height="555" alt="image" src="https://github.com/user-attachments/assets/2e430e9d-cb05-4ee3-834e-f22f95069693" />
 </details>
 
+4. The Snap gff2 file was not showing introns on IGV, so this code was run to convert the gff2 into a gff3 in the simplest way toallow introns to appear by ordering and labelling the data properly.
 
-4. In order to determine if there were regions in the Bc394 genome NOT present in the B71 reference genome by visual comparison in IGV, the BLAST alignment done in step 5 of the BLAST section (B71 as query, Bc394 as subject) was converted to a gff3 using the following code, where Query Seq ID was used as the Seq ID, my source is "Awk" and my Type is "BLAST". Column 9/Gene ID in the gff was "none" and phase was a dot ".".
+```
+awk 'BEGIN{OFS="\t";print "##gff-version 3"}$3~/^E(init|xon|term|sngl)$/{
+gid=$9;t=gid".t1";
+if(!seen[gid]++){gene[gid]=$1 OFS "SNAP" OFS "gene" OFS $4 OFS $5 OFS "." OFS $7 OFS "." OFS "ID="gid;
+mrna[gid]=$1 OFS "SNAP" OFS "transcript" OFS $4 OFS $5 OFS "." OFS $7 OFS "." OFS "ID="t";Parent="gid}
+cds[t]=cds[t] sprintf("%s\tSNAP\tCDS\t%s\t%s\t%s\t%s\t0\tParent=%s\n",$1,$4,$5,$6,$7,t);
+if($4<min[gid]||!min[gid])min[gid]=$4;if($5>max[gid])max[gid]=$5}
+END{for(g in gene){sub(/\t[0-9]+\t[0-9]+\t/,"\t"min[g]"\t"max[g]"\t",gene[g]);
+sub(/\t[0-9]+\t[0-9]+\t/,"\t"min[g]"\t"max[g]"\t",mrna[g]);
+print gene[g];print mrna[g];printf "%s",cds[g".t1"]}}' Bc394-snap.gff2 > Bc394-snap_igv.gff3
+
+```
+5. The file was downloaded to my local machine using the following command.
+
+```
+scp xrar222@xrar222.cs.uky.edu:/home/xrar222/genes/snap/Bc394-snap_igv.gff3 C:\Users\19042\Downloads\IGVforClass
+```
+
+6. The Snap file now shows intronic regions, as shown below:
+<details><summary>Click here to see the Snap alignment with introns</summary>
+  <img width="533" height="226" alt="SnapShowingIntrons" src="https://github.com/user-attachments/assets/c03847c4-7235-4dd3-8777-53b69055ed4e" />
+</details>
+   
+8. In order to determine if there were regions in the Bc394 genome NOT present in the B71 reference genome by visual comparison in IGV, the BLAST alignment done in step 5 of the BLAST section (B71 as query, Bc394 as subject) was converted to a gff3 using the following code, where Query Seq ID was used as the Seq ID, my source is "Awk" and my Type is "BLAST". Column 9/Gene ID in the gff was "none" and phase was a dot ".".
 
 ```
 awk 'BEGIN{OFS="\t"; print "##gff-version 3"} $0!~/^#/{st=($7<=$8?"+":"-"); s=($7<=$8?$7:$8); e=($7<=$8?$8:$7); print $1,"Awk","BLAST",s,e,".",st,".","Gene_ID=none"}' B71.Bc394.BLAST > B71.Bc394.BLAST.gff3
 ```
-5. The gff3 file created and the B71 fasta file were downloaded to my local machine using the following commands:
+8. The gff3 file created and the B71 fasta file were downloaded to my local machine using the following commands:
 
 ```
 scp xrar222@xrar222.cs.uky.edu:/home/xrar222/blast/B71.Bc394.BLAST.gff3 C:\Users\19042\Downloads\IGVforClass
 scp xrar222@xrar222.cs.uky.edu:/home/xrar222/blast/B71.fasta C:\Users\19042\Downloads\IGVforClass
 ```
-6. The gff3 file and B71 reference genome were uploaded into IGV to examine the comparison for parts of the B71 genome that are present that the Bc394 genome did not have. You can see the contents of the gff3 in the files menu of this repository under "gff3 B71 vs Bc394".
+9. The gff3 file and B71 reference genome were uploaded into IGV to examine the comparison for parts of the B71 genome that are present that the Bc394 genome did not have. You can see the contents of the gff3 in the files menu of this repository under "gff3 B71 vs Bc394".
 
-7. Most chromosomes had small missing chunks of anywhere from 50 bp to 4,000bp. Chromosome 5 was the most complete. Chromosome 8 was the most split up. One of the largest missing chunks was on Chromosome 3, spanning 48,000 bp.
+10. Most chromosomes had small missing chunks of anywhere from 50 bp to 4,000bp. Chromosome 5 was the most complete. Chromosome 8 was the most split up. One of the largest missing chunks was on Chromosome 3, spanning 48,000 bp.
    <details><summary>Click here to see the 48,000bp chunk missing on CHR 3</summary><img width="460" height="206" alt="CHR3Missing" src="https://github.com/user-attachments/assets/f77db2aa-b261-4742-b7df-df46a497ff65" />
 </details>
 
