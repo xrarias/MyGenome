@@ -1703,20 +1703,27 @@ scp xrar222@mcc.uky.edu:/project/farman_s26abt480/xrar222/RNAseq/Bc394_alignment
 scp xrar222@mcc.uky.edu:/project/farman_s26abt480/xrar222/RNAseq/Bc394_alignments/SSID116_Bc394_hits.bam.bai C:\Users\19042\Downloads\IGVforClass
 ```
 
-6. The alignments were uploaded into IGV against the Bc394 genome to answer and collect images on the following points of interest:
+6. The alignments were uploaded into IGV against the Bc394 genome and gene predictions to answer and collect images on the following points of interest:
 
-<details><summary>6a.Genes with predicted introns where the RNAsew data supports the placement of the predicted introns:</summary> IMAGE HERE </details>
+<details><summary>6a.Genes with predicted introns where the RNAseq data supports the placement of the predicted introns:</summary> IMAGE HERE </details>
 
 <details><summary>6b. Genes with predicted introns where the introns are spliced/not spliced 100% of the time:</summary> IMAGE HERE </details>
   
-<details><summary>6c. Genes that are only expressed in culture:</summary> IMAGE HERE </details>
-<details><summary>6d. Genes that are only expressed in planta:</summary> IMAGE HERE </details>
-<details><summary>6e. Predicted genes with no evidence of expression:</summary> IMAGE HERE </details>
-<details><summary>6f. Expressed genes that were not predicted:</summary> IMAGE HERE </details>
+<details><summary>6c. Genes that are only expressed in culture:</summary> <img width="953" height="547" alt="image" src="https://github.com/user-attachments/assets/5d9de5ba-c552-4b34-9c23-9a26be62c34e" />
+ </details>
+
+<details><summary>6d. Genes that are only expressed in planta:</summary> <img width="943" height="553" alt="image" src="https://github.com/user-attachments/assets/cc9ecb36-8ff8-4de6-9d22-04f62f8db2f6" />
+ </details>
+
+<details><summary>6e. Predicted genes with no evidence of expression:</summary> <img width="898" height="549" alt="Predicted AlmostNoEvidenceRNA" src="https://github.com/user-attachments/assets/223609d1-b7c9-4831-9562-b3b252d7545c" />
+</details>
+
+<details><summary>6f. Expressed genes that were not predicted:</summary> <img width="617" height="554" alt="Expressed NotPredicted" src="https://github.com/user-attachments/assets/2b6675d9-e855-4939-bea8-587bcc5f97e4" />
+ </details>
 
 </details>
 
-  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 <details>
 <summary>NEIGH!</summary>
   
